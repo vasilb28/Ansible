@@ -1,6 +1,6 @@
 ---
   - name: updates
-    hosts: Ansible
+    hosts: all
     become: yes
     tasks:
       - name: ensure updates are there
