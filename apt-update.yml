@@ -1,11 +1,14 @@
 ---
-- name: Update Linux Servers
-  hosts: your_target_servers
-  become: yes  # Use sudo to become a privileged user
+  - name: updates
+    hosts: linux
+    become: yes
+    tasks:
+      - name: ensure updates are there
+        apt: update_cache=yes force_apt_get=yes cache_valid_time=3600
 
-  tasks:
-    - name: Update APT packages (Debian/Ubuntu)
-      apt:
-        update_cache: yes
-        upgrade: yes
-      when: ansible_os_family == 'Debian' or ansible_os_family == 'Ubuntu'
+      - name: Upgrade all apt packages
+        apt: upgrade=dist force_apt_get=yes
+
+      - name: set timezone Europe/Berlin
+        timezone:
+          name: Europe/Berlin
