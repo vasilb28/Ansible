@@ -1,6 +1,6 @@
 ---
   - name: updates
-    hosts: linux
+    hosts: Test
     become: yes
     tasks:
       - name: ensure updates are there
