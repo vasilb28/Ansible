@@ -1,0 +1,11 @@
+---
+- name: Update Linux Servers
+  hosts: your_target_servers
+  become: yes  # Use sudo to become a privileged user
+
+  tasks:
+    - name: Update APT packages (Debian/Ubuntu)
+      apt:
+        update_cache: yes
+        upgrade: yes
+      when: ansible_os_family == 'Debian' or ansible_os_family == 'Ubuntu'
