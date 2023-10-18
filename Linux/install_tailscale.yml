@@ -1,0 +1,23 @@
+---
+- name: Install and Start Tailscale
+  hosts: servers
+  become: true
+  tasks:
+    - name: Download Tailscale package
+      get_url:
+        url: https://pkgs.tailscale.com/stable/tailscale_{{ tailscale_version }}.amd64.tgz
+        dest: /tmp/tailscale.tgz
+
+    - name: Extract Tailscale package
+      ansible.builtin.shell: tar -xzf /tmp/tailscale.tgz -C /tmp
+      changed_when: false
+
+    - name: Install Tailscale
+      ansible.builtin.copy:
+        src: /tmp/tailscale_{{ tailscale_version }}/tailscale
+        dest: /usr/local/bin/tailscale
+        mode: 0755
+
+    - name: Start Tailscale
+      ansible.builtin.shell: /usr/local/bin/tailscale up --authkey={{ tailscale_authkey }}
+      ignore_errors: yes
