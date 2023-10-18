@@ -1,0 +1,14 @@
+---
+- name: Install Ansible on Servers
+  hosts: all
+  become: true
+  tasks:
+    - name: Install Ansible
+      package:
+        name: ansible
+        state: present
+      register: ansible_install_status
+
+    - name: Print Ansible installation status
+      debug:
+        var: ansible_install_status
