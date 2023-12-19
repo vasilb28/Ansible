@@ -1,0 +1,14 @@
+---
+- name: Install tmux
+  hosts: all
+  become: true
+  tasks:
+    - name: Install tmux
+      package:
+        name: tmux
+        state: present
+      register: tmux_install_status
+
+    - name: Print Tmux installation status
+      debug:
+        var: tmux_install_status
