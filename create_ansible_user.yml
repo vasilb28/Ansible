@@ -6,7 +6,7 @@
     - name: Create ansible user
       user:
         name: ansible
-        password: "{{ 'password' | password_hash('sha512') }}"
+        password: "{{ ansible-password }}"
         shell: /bin/bash
         createhome: yes
 
