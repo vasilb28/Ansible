@@ -1,20 +1,22 @@
 ---
-- name: Create Ansible User with Admin Rights
-  hosts: all
+- name: Create and Set Hashed Password for Ansible User
+  hosts: your_target_hosts
   become: true
+  vars:
+    username_to_create: "ansible"
+    hashed_password: "$6$UhLSM2nOzAdkQ$joiRo0yUHv4x8Efe/nBklhrqnnoR6G.6LwdlL78Qm7hK9lSJu4d7RdvswuU7wgXUAWoCDZbyke.iZGFcy1w6P/"
   tasks:
     - name: Create ansible user
       user:
-        name: ansible
-        password: "{{ ansible-password }}"
+        name: "{{ username_to_create }}"
+        password: "{{ hashed_password }}"
         shell: /bin/bash
         createhome: yes
-
-    - name: Add ansible user to sudoers file
-      lineinfile:
-        dest: /etc/sudoers
-        state: present
-        regexp: '^ansible'
-        line: 'ansible ALL=(ALL) NOPASSWD: ALL'
-        validate: 'visudo -cf %s'
       become: true
+
+    - name: Set hashed password for ansible user
+      user:
+        name: "{{ username_to_create }}"
+        password: "{{ hashed_password }}"
+      become: true
+
