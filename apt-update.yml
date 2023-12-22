@@ -2,7 +2,7 @@
   - name: updates
     hosts: all
     become: yes
-    become_user: ansible
+    become_user: root
     tasks:
       - name: ensure updates are there
         apt: update_cache=yes force_apt_get=yes cache_valid_time=3600
