@@ -1,0 +1,12 @@
+---
+- hosts: all
+  tasks:
+  - name: create ansible user
+    user:
+      name: ansible
+      shell: /bin/bash
+      group: users
+      groups: sudo
+      append: true
+      password: $6$UhLSM2nOzAdkQ$joiRo0yUHv4x8Efe/nBklhrqnnoR6G.6LwdlL78Qm7hK9l>
+
