@@ -1,12 +1,13 @@
 ---
-- hosts: all
+- name: Set Hashed Password for Ansible User
+  hosts: all
+  become: true
+  vars:
+    username_to_change: "ansible"
+    hashed_password: "$6$UhLSM2nOzAdkQ$joiRo0yUHv4x8Efe/nBklhrqnnoR6G.6LwdlL78Qm7hK9lSJu4d7RdvswuU7wgXUAWoCDZbyke.iZGFcy1w6P/"
   tasks:
-  - name: create ansible user
-    user:
-      name: ansible
-      shell: /bin/bash
-      group: users
-      groups: sudo
-      append: true
-      password: $6$UhLSM2nOzAdkQ$joiRo0yUHv4x8Efe/nBklhrqnnoR6G.6LwdlL78Qm7hK9l>
-
+    - name: Set hashed password for ansible user
+      user:
+        name: "{{ username_to_change }}"
+        password: "{{ hashed_password }}"
+      become: true
