@@ -1,6 +1,6 @@
 ---
 - name: Create and Set Hashed Password for Ansible User
-  hosts: your_target_hosts
+  hosts: all
   become: true
   vars:
     username_to_create: "ansible"
