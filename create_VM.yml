@@ -14,7 +14,7 @@
         format      : qcow2
         timeout     : 500  # Note: The task can take a while. Adapt
 
-    - name: Start VM and wait for it to be running
+    - name: Start VM
       proxmox_kvm:
         api_user    : root@pam
         api_password: "pass"  # Use quotes for strings
