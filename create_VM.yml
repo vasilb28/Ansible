@@ -1,8 +1,6 @@
  name: Proxmox stuff
   hosts: all
-  
-  tasks:
-    
+    tasks: 
 
     - name: Clone VM
       proxmox_kvm:
