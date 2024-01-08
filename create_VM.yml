@@ -1,4 +1,5 @@
- name: Proxmox stuff
+---
+- name: Proxmox stuff
   hosts: all
   tasks: 
 
