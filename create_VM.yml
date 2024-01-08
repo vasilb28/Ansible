@@ -24,13 +24,3 @@
         node        : DarthVader
         state       : started
         timeout     : 500
-        
-    - name: Gather facts about the VM
-      proxmox:
-       api_user    : root@pam
-       api_password: "pass"  # Use quotes for strings
-       api_host    : 10.10.0.3
-       node        : DarthVader
-       command     : get
-       path        : /nodes/DarthVader/qemu/{{ vm_result.ansible_proxmox_vm.vmid }}/config
-     register: vm_info
