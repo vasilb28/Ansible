@@ -1,0 +1,32 @@
+ name: Proxmox stuff
+  hosts: all
+  vars:
+    name: ubuntu
+    ansible_python_interpreter: /usr/bin/python3  # Replace with the correct path
+    password: pass
+  tasks:
+    - name: Generate random password
+      set_fact:
+        yeppers: "ubuntu-{{ lookup('password', '/dev/null chars=ascii_lowercase,digits length=8') }}"
+
+    - name: Clone VM
+      proxmox_kvm:
+        api_user    : root@pam
+        api_password: {{ 'pass' }}
+        api_host    : 10.10.0.3
+        clone       : template   # The VM source
+        name        : ubuntu-template  # The target VM name
+        node        : DarthVader
+        storage     : local-lvm
+        format      : qcow2
+        timeout     : 500  # Note: The task can take a while. Adapt
+
+    - name: Start VM
+      proxmox_kvm:
+        api_user    : root@pam
+        api_password: {{ 'pass' }}
+        api_host    : 10.10.0.3
+        name        : ubuntu-template
+        node        : proxmox
+        state       : started
+        timeout     : 500
