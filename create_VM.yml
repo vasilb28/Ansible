@@ -35,14 +35,11 @@
       delay: 10
 
     - name: Gather facts about the VM
-      proxmox_kvm_info:
-        api_user    : root@pam
-        api_password: "pass"  # Use quotes for strings
-        api_host    : 10.10.0.3
-        node        : DarthVader
-        vmid        : "{{ vm_result.ansible_proxmox_vm.vmid }}"
-      register: vm_info
-
-    - name: Display VM IP address
-      debug:
-        var: vm_info.ansible_proxmox_vm.ips[0]
+  proxmox:
+    api_user    : root@pam
+    api_password: "pass"  # Use quotes for strings
+    api_host    : 10.10.0.3
+    node        : DarthVader
+    command     : get
+    path        : /nodes/DarthVader/qemu/{{ vm_result.ansible_proxmox_vm.vmid }}/config
+  register: vm_info
