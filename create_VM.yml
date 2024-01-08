@@ -24,7 +24,7 @@
         state       : started
         timeout     : 500
       async: 120
-      poll: 0
+      poll: 60
       register: vm_result
 
     - name: Wait for VM to be up
