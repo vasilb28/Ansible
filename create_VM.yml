@@ -32,7 +32,6 @@
         jid: "{{ vm_result.ansible_job_id }}"
       retries: 300
       delay: 10
-      until: async_status.finished
 
     - name: Gather facts about the VM
       command: "qm config {{ vm_result.ansible_proxmox_vm.vmid }}"
@@ -41,3 +40,8 @@
     - name: Display VM Information
       debug:
         var: vm_info.stdout_lines
+
+    - name: Display Async Status
+      debug:
+        var: async_status
+
