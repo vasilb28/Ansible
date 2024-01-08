@@ -1,0 +1,6 @@
+---
+- hosts: all
+  tasks:
+    - name: Show all IP addresses
+      debug:
+        msg: "The following IP addresses are assigned to this host: {{ ansible_all_ipv4_addresses }}"
