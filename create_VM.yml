@@ -27,6 +27,6 @@
         api_password: {{ 'pass' }}
         api_host    : 10.10.0.3
         name        : ubuntu-template
-        node        : proxmox
+        node        : DarthVader
         state       : started
         timeout     : 500
