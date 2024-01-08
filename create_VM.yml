@@ -28,6 +28,7 @@
       register: vm_result
 
     - name: Wait for VM to be up
+      when: vm_result is defined and vm_result.ansible_job_id is defined
       async_status:
         jid: "{{ vm_result.ansible_job_id }}"
       until: async_status.finished
@@ -37,6 +38,11 @@
     - name: Gather facts about the VM
       command: "qm config {{ vm_result.ansible_proxmox_vm.vmid }}"
       register: vm_info
+
+    - name: Display VM Information
+      debug:
+        var: vm_info.stdout_lines
+
 
     - name: Display VM Information
       debug:
