@@ -5,7 +5,7 @@
     - name: Clone VM
       proxmox_kvm:
         api_user    : root@pam
-        api_password: {{ 'pass' }}
+        api_password: '{{ pass }}'
         api_host    : 10.10.0.3
         clone       : template   # The VM source
         name        : ubuntu-template  # The target VM name
@@ -17,7 +17,7 @@
     - name: Start VM
       proxmox_kvm:
         api_user    : root@pam
-        api_password: {{ 'pass' }}
+        api_password: '{{ pass }}'
         api_host    : 10.10.0.3
         name        : ubuntu-template
         node        : DarthVader
