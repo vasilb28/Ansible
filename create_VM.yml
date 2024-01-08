@@ -1,12 +1,11 @@
 ---
 - name: Proxmox stuff
   hosts: all
-  tasks: 
-
+  tasks:
     - name: Clone VM
       proxmox_kvm:
         api_user    : root@pam
-        api_password: '{{ pass }}'
+        api_password: "pass"  # Use quotes for strings
         api_host    : 10.10.0.3
         clone       : template   # The VM source
         name        : ubuntu-template  # The target VM name
@@ -15,12 +14,30 @@
         format      : qcow2
         timeout     : 500  # Note: The task can take a while. Adapt
 
-    - name: Start VM
+    - name: Start VM and wait for it to be running
       proxmox_kvm:
         api_user    : root@pam
-        api_password: '{{ pass }}'
+        api_password: "pass"  # Use quotes for strings
         api_host    : 10.10.0.3
         name        : ubuntu-template
         node        : DarthVader
         state       : started
         timeout     : 500
+      async: 120
+      poll: 0
+      register: vm_result
+
+    - name: Wait for VM to be up
+      async_status:
+        jid: "{{ vm_result.ansible_job_id }}"
+      until: async_status.finished
+      retries: 300
+      delay: 10
+
+    - name: Gather facts about the VM
+      command: "qm config {{ vm_result.ansible_proxmox_vm.vmid }}"
+      register: vm_info
+
+    - name: Display VM Information
+      debug:
+        var: vm_info.stdout_lines
